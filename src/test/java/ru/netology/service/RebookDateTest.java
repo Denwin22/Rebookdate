@@ -52,7 +52,7 @@ class RebookDateTest {
             $(".menu-item__control").click();
             $(".button__text").click();
         }
-        $("[data-test-id=success-notification]>.notification__content").shouldHave(Condition.exactText("Встреча успешно заплавнирована на " + firstMeetingDate));
+        $("[data-test-id=success-notification]>.notification__content").shouldHave(Condition.exactText("Встреча успешно запланирована на " + firstMeetingDate));
         $("[placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
         //sleep(2000);
         $("[placeholder='Дата встречи']").setValue(secondMeetingDate);
