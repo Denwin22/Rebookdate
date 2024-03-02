@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.codeborne.selenide.Condition;
+import org.junit.jupiter.api.Timeout;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -20,6 +21,8 @@ class RebookDateTest {
         open("http://localhost:9999");
     }
 
+    int delayInSeconds = 2; // Указывайте необходимую задержку в секундах
+
     @Test
     @DisplayName("Should successful book and rebook meeting")
     void shouldSuccessfulBookAndRebookMeeting() {
@@ -29,19 +32,19 @@ class RebookDateTest {
         var daysToAddForSecondMeeting = 7;
         var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
         $("[placeholder='Город']").setValue(validUser.getCity());
-        //sleep(2000);
+//        sleep(2000);
         $("[placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        //sleep(2000);
+//        sleep(2000);
         $("[placeholder='Дата встречи']").setValue(firstMeetingDate);
-        //sleep(2000);
+//        sleep(2000);
         $("[name='name']").setValue(validUser.getName());
-        //sleep(2000);
+//        sleep(2000);
         $("[name='phone']").setValue(validUser.getPhone());
-        //sleep(2000);
+//        sleep(2000);
         $(".checkbox__box").click();
-        //sleep(2000);
+//        sleep(2000);
         $$("button").find(Condition.exactText("Запланировать")).click();
-        //sleep(2000);
+//        sleep(2000);
 
         if ($(withText("Доставка в выбранный город недоступна")).isDisplayed()) {
             int i = validUser.getCity().length() - 2;
@@ -54,11 +57,11 @@ class RebookDateTest {
         }
         $("[data-test-id=success-notification]>.notification__content").shouldHave(Condition.exactText("Встреча успешно запланирована на " + firstMeetingDate));
         $("[placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        //sleep(2000);
+//        sleep(2000);
         $("[placeholder='Дата встречи']").setValue(secondMeetingDate);
         //sleep(2000);
         $$("button").find(Condition.exactText("Запланировать")).click();
-        //sleep(2000);
+//        sleep(2000);
         $(withText("Необходимо подтверждение")).shouldBe(Condition.visible, Duration.ofSeconds(15));
         $("div.notification__content > button").click();
         $("[data-test-id=success-notification]>.notification__content").shouldHave(Condition.exactText("Встреча успешно запланирована на " + secondMeetingDate));
